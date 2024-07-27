@@ -24,6 +24,24 @@ import lombok.Setter;
 @EqualsAndHashCode(of="id")
 public class Paciente {
 	
+	public Paciente(InsertPacienteDTO dados) {
+		// TODO Auto-generated constructor stub
+	this.bairro = dados.bairro();
+	this.cep = dados.cep();
+	this.cidade = dados.cidade();
+	this.cpf = dados.cpf();
+	this.dataNascimento = dados.dataNascimento();
+	this.email = dados.email();
+	this.logradouro = dados.logradouro();
+	this.nome = dados.nome();
+	this.observacoes = dados.observacoes();
+	this.orgaoEmissor = dados.orgaoEmissor();
+	this.rg = dados.rg();
+	this.sexo = dados.sexo();
+	this.telefone = dados.telefone();
+	this.uf = dados.uf();
+	}
+	
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
