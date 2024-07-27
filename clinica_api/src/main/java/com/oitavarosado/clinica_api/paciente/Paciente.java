@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name="pacientes")
-@Table(name="paciente")
+@Table(name="Paciente")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -45,23 +47,34 @@ public class Paciente {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	private String nome;
-	@Enumerated(EnumType.STRING)
 	
+	@Enumerated(EnumType.STRING)
 	private Sexo sexo;
+    @Past(message = "A data de nascimento deve ser uma data passada")
 	private LocalDate dataNascimento;
+	@NotBlank
 	private String cpf;
+	@NotBlank
 	private String rg;
+	@NotBlank
 	private String orgaoEmissor;
+	@NotBlank
 	private String logradouro; 
+	@NotBlank
 	private String bairro;
+	@NotBlank
 	private String cidade;
 	
 	@Enumerated(EnumType.STRING)
 	private Uf uf;
-	
+	@NotBlank
 	private String cep;
+	@NotBlank
 	private String telefone;
+	@NotBlank
 	private String email;
+	@NotBlank
 	private String observacoes;
 }

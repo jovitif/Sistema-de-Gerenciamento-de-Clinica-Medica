@@ -10,6 +10,8 @@ import com.oitavarosado.clinica_api.paciente.InsertPacienteDTO;
 import com.oitavarosado.clinica_api.paciente.Paciente;
 import com.oitavarosado.clinica_api.paciente.PacienteRepository;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/pacientes")
 public class PacientesController {
@@ -17,7 +19,7 @@ public class PacientesController {
 	private PacienteRepository repository;
 	
 	@PostMapping
-	public void cadastrarPaciente(@RequestBody InsertPacienteDTO dados) {
+	public void cadastrarPaciente(@RequestBody @Valid InsertPacienteDTO dados) {
 		repository.save(new Paciente(dados));
 	}
 }
