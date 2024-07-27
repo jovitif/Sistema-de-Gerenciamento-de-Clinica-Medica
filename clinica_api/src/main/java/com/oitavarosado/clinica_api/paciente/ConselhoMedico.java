@@ -1,7 +1,7 @@
 package com.oitavarosado.clinica_api.paciente;
 
 public enum ConselhoMedico {
-	AC("Acre"),
+	CONSELHO_REGIONAL_DE_MEDICINA("Conselho Regional de Medicina"),
     AL("Alagoas"),
     AP("Amapá"),
     AM("Amazonas"),
