@@ -1,8 +1,11 @@
-package com.oitavarosado.clinica_api.paciente;
+package com.oitavarosado.clinica_api.api.dto.paciente;
 
 import java.time.LocalDate;
 
 import org.hibernate.annotations.Fetch;
+
+import com.oitavarosado.clinica_api.domain.entity.Sexo;
+import com.oitavarosado.clinica_api.domain.entity.Uf;
 
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;

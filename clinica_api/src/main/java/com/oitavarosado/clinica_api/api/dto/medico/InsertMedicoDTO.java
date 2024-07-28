@@ -1,4 +1,6 @@
-package com.oitavarosado.clinica_api.paciente;
+package com.oitavarosado.clinica_api.api.dto.medico;
+
+import com.oitavarosado.clinica_api.domain.entity.Uf;
 
 public record InsertMedicoDTO(
 		String nome,

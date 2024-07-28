@@ -17,12 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oitavarosado.clinica_api.paciente.DadosListagemPaciente;
-import com.oitavarosado.clinica_api.paciente.InsertPacienteDTO;
-import com.oitavarosado.clinica_api.paciente.Paciente;
-import com.oitavarosado.clinica_api.paciente.Paciente;
-import com.oitavarosado.clinica_api.paciente.Sexo;
-import com.oitavarosado.clinica_api.paciente.Uf;
+import com.oitavarosado.clinica_api.api.dto.paciente.DadosListagemPaciente;
+import com.oitavarosado.clinica_api.api.dto.paciente.InsertPacienteDTO;
+import com.oitavarosado.clinica_api.domain.entity.Paciente;
+import com.oitavarosado.clinica_api.domain.entity.Sexo;
+import com.oitavarosado.clinica_api.domain.entity.Uf;
 
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -1,7 +1,7 @@
-package com.oitavarosado.clinica_api.paciente;
+package com.oitavarosado.clinica_api.domain.entity;
 
-public enum ConselhoMedico {
-	CONSELHO_REGIONAL_DE_MEDICINA("Conselho Regional de Medicina"),
+public enum Uf {
+    AC("Acre"),
     AL("Alagoas"),
     AP("Amapá"),
     AM("Amazonas"),
@@ -31,7 +31,7 @@ public enum ConselhoMedico {
 
     private final String nome;
 
-    ConselhoMedico(String nome) {
+    Uf(String nome) {
         this.nome = nome;
     }
 

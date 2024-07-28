@@ -1,4 +1,4 @@
-package com.oitavarosado.clinica_api.controllers;
+package com.oitavarosado.clinica_api.api.RestController;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

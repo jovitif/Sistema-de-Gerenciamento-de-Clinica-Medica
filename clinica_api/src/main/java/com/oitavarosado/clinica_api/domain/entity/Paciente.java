@@ -1,6 +1,8 @@
-package com.oitavarosado.clinica_api.paciente;
+package com.oitavarosado.clinica_api.domain.entity;
 
 import java.time.LocalDate;
+
+import com.oitavarosado.clinica_api.api.dto.paciente.InsertPacienteDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

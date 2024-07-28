@@ -1,4 +1,4 @@
-package com.oitavarosado.clinica_api.paciente;
+package com.oitavarosado.clinica_api.domain.entity;
 
 public enum Sexo {
     MASCULINO("Masculino"),
