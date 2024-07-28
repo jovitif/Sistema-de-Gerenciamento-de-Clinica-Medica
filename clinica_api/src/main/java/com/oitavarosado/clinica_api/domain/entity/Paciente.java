@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "pacientes")
+@Entity
 @Table(name = "Paciente")
 @Getter
 @Setter
@@ -30,6 +30,10 @@ public class Paciente {
 
 	public Paciente(Paciente data) {
 
+	}
+	
+	public Paciente() {
+		
 	}
 
 	public Paciente(InsertPacienteDTO dados) {

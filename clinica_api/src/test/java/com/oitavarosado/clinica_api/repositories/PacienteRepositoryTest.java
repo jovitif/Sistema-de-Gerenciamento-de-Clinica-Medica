@@ -34,7 +34,7 @@ class PacienteRepositoryTest{
 		Paciente data = new Paciente("teste", Sexo.MASCULINO, LocalDate.of(2003, 04, 14), "teste", "teste", "teste", "teste", "teste", "teste", Uf.RN, "teest", "teste", "teste", "tetes");
 		this.createPaciente(data);
 	
-		Optional<Paciente> foundPaciente = this.pacienteRepository.findById(null)
+		Optional<Paciente> foundPaciente = this.pacienteRepository.findById((long) 10);
 	}
 	
 	private Paciente createPaciente(Paciente data) {
