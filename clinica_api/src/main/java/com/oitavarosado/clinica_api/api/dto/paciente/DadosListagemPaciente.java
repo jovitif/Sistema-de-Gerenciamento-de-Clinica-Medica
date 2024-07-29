@@ -12,7 +12,6 @@ import jakarta.validation.constraints.Past;
 
 // Dados que seram mostrados na tela
 public record DadosListagemPaciente(
-				Long id,
 				String nome, 
 				Sexo sexo,
 				LocalDate dataNascimento,
@@ -29,6 +28,6 @@ public record DadosListagemPaciente(
 				String observacoes
 		) {
 	public DadosListagemPaciente(Paciente paciente) {
-		this(paciente.getId(),paciente.getNome(),paciente.getSexo(),paciente.getDataNascimento(),paciente.getCpf(),paciente.getRg(),paciente.getOrgaoEmissor(),paciente.getLogradouro(),paciente.getBairro(),paciente.getCidade(),paciente.getUf(),paciente.getCep(),paciente.getTelefone(),paciente.getEmail(),paciente.getObservacoes());
+		this(paciente.getNome(),paciente.getSexo(),paciente.getDataNascimento(),paciente.getCpf(),paciente.getRg(),paciente.getOrgaoEmissor(),paciente.getLogradouro(),paciente.getBairro(),paciente.getCidade(),paciente.getUf(),paciente.getCep(),paciente.getTelefone(),paciente.getEmail(),paciente.getObservacoes());
 	}
 }

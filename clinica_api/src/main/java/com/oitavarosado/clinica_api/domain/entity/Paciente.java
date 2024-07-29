@@ -1,9 +1,14 @@
 package com.oitavarosado.clinica_api.domain.entity;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.oitavarosado.clinica_api.api.dto.paciente.InsertPacienteDTO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,8 +16,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,20 +28,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Paciente")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@Table(name = "tb_pacientes")
 public class Paciente {
 
 	public Paciente(Paciente data) {
 
 	}
-	
+
 	public Paciente() {
-		
+
 	}
 
 	public Paciente(InsertPacienteDTO dados) {
@@ -58,52 +61,70 @@ public class Paciente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotBlank(message = "O campo nome não pode ser vazio")
+	@Column(updatable = false, nullable = false, unique = true)
+	private UUID uuid = UUID.randomUUID();
+
+	@NotBlank(message = "O nome é obrigatório")
+	@Column(nullable = false)
 	private String nome;
 
+	@NotNull(message = "O sexo é obrigatório")
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Sexo sexo;
-	
+
 	@Past(message = "A data de nascimento deve ser uma data passada")
+	@NotNull(message = "A data de nascimento é obrigatória")
 	private LocalDate dataNascimento;
-	
-	@NotBlank(message = "O CPF não pode ser vazio")
+
+	@NotBlank(message = "O CPF é obrigatório")
+	@Column(unique = true, nullable = false)
 	private String cpf;
-	
-	@NotBlank(message = "O RG não pode ser vazio")
+
+	@NotBlank(message = "O RG é obrigatório")
+	@Column(nullable = false)
 	private String rg;
-	
-	@NotBlank(message = "O orgão emissor não pode ser vazio")
+
+	@NotBlank(message = "O órgão emissor é obrigatório")
+	@Column(nullable = false)
 	private String orgaoEmissor;
-	
-	@NotBlank(message = "O logradouro não pode ser vazio")
+
+	@NotBlank(message = "O logradouro é obrigatório")
+	@Column(nullable = false)
 	private String logradouro;
-	
-	@NotBlank(message = "O bairro não pode ser vazio")
+
+	@NotBlank(message = "O bairro é obrigatório")
+	@Column(nullable = false)
 	private String bairro;
-	
-	@NotBlank(message = "A cidade não pode ser vazia")
+
+	@NotBlank(message = "A cidade é obrigatória")
+	@Column(nullable = false)
 	private String cidade;
 
+	@NotNull(message = "A UF é obrigatória")
 	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Uf uf;
-	
-	@NotBlank(message="O CEP não pode ser vazio")
+
+	@NotBlank(message = "O CEP é obrigatório")
+	@Column(nullable = false)
 	private String cep;
-	
-	@NotBlank(message="O telefone não pode ser vazio")
+
+	@NotBlank(message = "O telefone é obrigatório")
+	@Column(nullable = false)
 	private String telefone;
-	
-	@NotBlank(message="O email não pode ser vazio")
+
+	@Email(message = "O e-mail deve ser válido")
+	@NotBlank(message = "O e-mail é obrigatório")
+	@Column(nullable = false)
 	private String email;
-	
+
 	private String observacoes;
 
-	public Paciente(@NotBlank String nome, Sexo sexo,
-			@Past(message = "A data de nascimento deve ser uma data passada") LocalDate dataNascimento,
-			@NotBlank String cpf, @NotBlank String rg, @NotBlank String orgaoEmissor, @NotBlank String logradouro,
-			@NotBlank String bairro, @NotBlank String cidade, Uf uf, @NotBlank String cep, @NotBlank String telefone,
-			@NotBlank String email, @NotBlank String observacoes) {
+	public Paciente(UUID uuid, String nome, Sexo sexo, LocalDate dataNascimento, String cpf, String rg,
+			String orgaoEmissor, String logradouro, String bairro, String cidade, Uf uf, String cep, String telefone,
+			String email, String observacoes) {
+		this.uuid = uuid;
 		this.nome = nome;
 		this.sexo = sexo;
 		this.dataNascimento = dataNascimento;
@@ -239,5 +260,15 @@ public class Paciente {
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
+
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+	
+	
 
 }
