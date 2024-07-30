@@ -61,7 +61,7 @@ public class Paciente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(updatable = false, nullable = false, unique = true)
+	@Column(updatable = false, nullable = false)
 	private UUID uuid = UUID.randomUUID();
 
 	@NotBlank(message = "O nome é obrigatório")
@@ -78,7 +78,7 @@ public class Paciente {
 	private LocalDate dataNascimento;
 
 	@NotBlank(message = "O CPF é obrigatório")
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String cpf;
 
 	@NotBlank(message = "O RG é obrigatório")

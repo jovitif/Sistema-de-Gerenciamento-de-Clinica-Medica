@@ -23,7 +23,7 @@ public class Medico {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(updatable = false, nullable = false, unique = true)
+	@Column(updatable = false, nullable = false)
 	private UUID uuid = UUID.randomUUID();
 
 	@NotBlank(message = "O nome é obrigatório")
@@ -49,7 +49,7 @@ public class Medico {
 	@Column(nullable = false)
 	private CategoriaCBO classBrasileira;
 	@NotBlank(message = "O CPF é obrigatório")
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String cpf;
 	@NotBlank(message = "O logradouro é obrigatório")
 	@Column(nullable = false)
