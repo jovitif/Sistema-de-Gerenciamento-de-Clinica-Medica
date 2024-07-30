@@ -7,6 +7,8 @@ import com.oitavarosado.clinica_api.api.dto.medico.InsertMedicoDTO;
 import com.oitavarosado.clinica_api.api.dto.paciente.InsertPacienteDTO;
 
 public record InsertAgendamentoDTO(
+		Long medicoId,
+		Long pacienteId,
 		InsertMedicoDTO medico,
 		InsertPacienteDTO paciente,
 		String motivoConsulta,

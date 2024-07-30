@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
+import com.oitavarosado.clinica_api.api.dto.agendamento.InsertAgendamentoDTO;
+import com.oitavarosado.clinica_api.api.dto.medico.InsertMedicoDTO;
+import com.oitavarosado.clinica_api.api.dto.paciente.InsertPacienteDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -131,15 +135,26 @@ public class Agendamento {
 		this.observacoes = observacoes;
 	}
 
-	public Agendamento(UUID uuid, Medico medico, Paciente paciente, String motivoConsulta, LocalDate dataConsulta,
-			LocalTime horaConsulta, String localConsulta, String observacoes) {
-		this.uuid = uuid;
-		this.medico = medico;
-		this.paciente = paciente;
-		this.motivoConsulta = motivoConsulta;
-		this.dataConsulta = dataConsulta;
-		this.horaConsulta = horaConsulta;
-		this.localConsulta = localConsulta;
-		this.observacoes = observacoes;
+	public Agendamento(InsertAgendamentoDTO data) {
+	    this.medico = convertToMedicoEntity(data.medico());
+	    this.paciente = convertToPacienteEntity(data.paciente());
+	    this.motivoConsulta = data.motivoConsulta();
+	    this.dataConsulta = data.dataConsulta();
+	    this.horaConsulta = data.horaConsulta();
+	    this.localConsulta = data.localConsulta();
+	    this.observacoes = data.observacoes();
 	}
+	
+	public Agendamento() {
+		
+	}
+
+	private Medico convertToMedicoEntity(InsertMedicoDTO medicoDTO) {
+	    return new Medico(medicoDTO);
+	}
+
+	private Paciente convertToPacienteEntity(InsertPacienteDTO pacienteDTO) {
+	    return new Paciente(pacienteDTO);
+	}
+
 }
