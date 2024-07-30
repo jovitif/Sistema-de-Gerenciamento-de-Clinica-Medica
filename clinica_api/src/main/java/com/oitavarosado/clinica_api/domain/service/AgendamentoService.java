@@ -51,32 +51,36 @@ public class AgendamentoService {
 		return AgendamentoRepository.findByMedicoNome(nomeMedico);
 	}
 
+	private boolean isDataEHoraDisponivel(LocalDate dataConsulta, LocalTime horaConsulta, Medico medico) {
+	    List<Agendamento> agendamentos = AgendamentoRepository.findByMedicoAndDataConsultaAndHoraConsulta(medico, dataConsulta, horaConsulta);
+	    return agendamentos.isEmpty();
+	}
+
    
 
-    public Agendamento createAgendamento(InsertAgendamentoDTO dto) {
-        Medico medico = medicoRepository.findById(dto.medicoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
+	public Agendamento createAgendamento(InsertAgendamentoDTO dto) {
+	    Medico medico = medicoRepository.findById(dto.medicoId())
+	            .orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado"));
+	    
+	    Paciente paciente = pacienteRepository.findById(dto.pacienteId())
+	            .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
 
-        Paciente paciente = pacienteRepository.findById(dto.pacienteId())
-                .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado"));
+	    if (isDataEHoraDisponivel(dto.dataConsulta(), dto.horaConsulta(), medico)) {
+	        Agendamento agendamento = new Agendamento();
+	        agendamento.setUuid(UUID.randomUUID());
+	        agendamento.setMedico(medico);
+	        agendamento.setPaciente(paciente);
+	        agendamento.setMotivoConsulta(dto.motivoConsulta());
+	        agendamento.setDataConsulta(dto.dataConsulta());
+	        agendamento.setHoraConsulta(dto.horaConsulta());
+	        agendamento.setLocalConsulta(dto.localConsulta());
+	        agendamento.setObservacoes(dto.observacoes());
+	        return AgendamentoRepository.save(agendamento);
+	    } else {
+	        throw new ResourceNotFoundException("O médico já tem um agendamento para essa data e horário.");
+	    }
+	}
 
-        // Criar o agendamento
-        Agendamento agendamento = new Agendamento();
-        agendamento.setMedico(medico);
-        agendamento.setPaciente(paciente);
-        agendamento.setMotivoConsulta(dto.motivoConsulta());
-        agendamento.setDataConsulta(dto.dataConsulta());
-        agendamento.setHoraConsulta(dto.horaConsulta());
-        agendamento.setLocalConsulta(dto.localConsulta());
-        agendamento.setObservacoes(dto.observacoes());
-
-        if (isDataEHoraDisponivel(dto.dataConsulta(), dto.horaConsulta())) {
-            agendamento.setUuid(UUID.randomUUID());
-            return AgendamentoRepository.save(agendamento);
-        } else {
-            throw new ResourceNotFoundException("Já existe um agendamento para este médico na mesma data e hora.");
-        }
-    }
 
 	public Agendamento updateAgendamento(Agendamento Agendamento) {
 		Agendamento AgendamentoData = AgendamentoRepository.findByUuid(Agendamento.getUuid()).orElse(null);

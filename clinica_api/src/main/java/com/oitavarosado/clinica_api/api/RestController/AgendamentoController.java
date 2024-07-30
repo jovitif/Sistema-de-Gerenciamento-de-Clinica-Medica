@@ -32,55 +32,53 @@ public class AgendamentoController {
 
 	@Autowired
 	private AgendamentoService service;
-	
+
 	@GetMapping
 	public List<DadosListagemAgendamento> listar() {
-	    List<Agendamento> agendamentos = service.getAll(); 
-	    return agendamentos.stream()
-	                    .map(DadosListagemAgendamento::new) 
-	                    .toList(); 
+		List<Agendamento> agendamentos = service.getAll();
+		return agendamentos.stream().map(DadosListagemAgendamento::new).toList();
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<DadosListagemAgendamento> cadastraragendamento(@RequestBody @Valid InsertAgendamentoDTO dados) {
-	    Agendamento agendamento = service.createAgendamento(dados);
-	    
-	    DadosListagemAgendamento criado = new DadosListagemAgendamento(agendamento);
-	    	    if (criado == null) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-	    } else {
-	        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
-	    }
+	public ResponseEntity<DadosListagemAgendamento> cadastraragendamento(
+			@RequestBody @Valid InsertAgendamentoDTO dados) {
+		Agendamento agendamento = service.createAgendamento(dados);
+
+		DadosListagemAgendamento criado = new DadosListagemAgendamento(agendamento);
+		if (criado == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		} else {
+			return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+		}
 	}
-	
+
 	@PatchMapping
 	public ResponseEntity<DadosListagemAgendamento> alterar(@Valid @RequestBody InsertAgendamentoDTO dto) {
-	    Agendamento agendamento = service.updateAgendamentoPatch(new Agendamento(dto));
-	    DadosListagemAgendamento atualizado = new DadosListagemAgendamento(agendamento);
-	    if(atualizado!=null) {
-	    	return new ResponseEntity<>(atualizado, HttpStatus.OK);
-	    }else {
-	    	return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
+		Agendamento agendamento = service.updateAgendamentoPatch(new Agendamento(dto));
+		DadosListagemAgendamento atualizado = new DadosListagemAgendamento(agendamento);
+		if (atualizado != null) {
+			return new ResponseEntity<>(atualizado, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+
 	@DeleteMapping("/id/{agendamentoId}")
-	public ResponseEntity<Long> deletar(@PathVariable long agendamentoId){
+	public ResponseEntity<Long> deletar(@PathVariable long agendamentoId) {
 		String teste = service.deleteAgendamento(agendamentoId);
-		if(teste.equals("ok")) return new ResponseEntity<>(agendamentoId, HttpStatus.OK);
+		if (teste.equals("ok"))
+			return new ResponseEntity<>(agendamentoId, HttpStatus.OK);
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
+
 	@DeleteMapping("/uuid/{agendamentoUuid}")
 	public ResponseEntity<UUID> deletar(@PathVariable UUID agendamentoUuid) {
-	String result = service.deleteAgendamento(agendamentoUuid);
-	if (result.equals("ok")) {
-	return new ResponseEntity<>(HttpStatus.OK);
-	} else {
-	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		String result = service.deleteAgendamento(agendamentoUuid);
+		if (result.equals("ok")) {
+			return new ResponseEntity<>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
-	}
-	
 
-	
 }
