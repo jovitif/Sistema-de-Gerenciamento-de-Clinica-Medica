@@ -31,21 +31,23 @@ public class TokenService {
 		}
 	}
 	
-	public String getSubject(String TokenJWT) {
+	public String getSubject(String tokenJWT) {
+	    if (tokenJWT != null && tokenJWT.startsWith("Bearer ")) {
+	        tokenJWT = tokenJWT.substring(7);
+	    }
 
-		try {
-		    var algorithm = Algorithm.HMAC256(secret);
-		    return JWT.require(algorithm)
-		        // specify any specific claim validations
-		        .withIssuer("clinica_api")
-		        // reusable verifier instance
-		        .build()
-		        .verify(TokenJWT)
-		        .getSubject();
-		} catch (JWTVerificationException exception){
-			throw new RuntimeException("Token invalido ou expirado!", exception);
-		}
+	    try {
+	        var algorithm = Algorithm.HMAC256(secret);
+	        return JWT.require(algorithm)
+	            .withIssuer("clinica_api")
+	            .build()
+	            .verify(tokenJWT)
+	            .getSubject();
+	    } catch (JWTVerificationException exception) {
+	        throw new RuntimeException("Token inválido ou expirado!", exception);
+	    }
 	}
+
 	
 	private Instant dataExpiracao() {
 		return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

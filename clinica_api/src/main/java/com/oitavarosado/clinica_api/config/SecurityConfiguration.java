@@ -20,20 +20,32 @@ import com.oitavarosado.clinica_api.filters.SecurityFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
 	@Autowired
 	private SecurityFilter securityFilter;
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                .anyRequest().authenticated()
-                .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+    
+	private static final String[] SWAGGER_WHITELIST= {
+			"/swagger-ui/**",
+			"/v3/api-docs/**",
+			"/swagger-resources/**",
+			"/swagger-resources"
+	};
+	
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    http
+	        .csrf().disable()
+	        .authorizeRequests()
+	            .requestMatchers(SWAGGER_WHITELIST).permitAll()
+	            .requestMatchers(HttpMethod.POST, "/login").permitAll()
+	            .requestMatchers(HttpMethod.POST, "/cadastro").permitAll()
+	            .anyRequest().authenticated()
+	        .and()
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	    return http.build();
+	}
+
+    
+   
 	
 	
 	@Bean

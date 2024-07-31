@@ -78,11 +78,11 @@ public class Paciente {
 	private LocalDate dataNascimento;
 
 	@NotBlank(message = "O CPF é obrigatório")
-	@Column(nullable = false)
+	@Column(nullable = false,unique=true)
 	private String cpf;
 
 	@NotBlank(message = "O RG é obrigatório")
-	@Column(nullable = false)
+	@Column(nullable = false,unique=true)
 	private String rg;
 
 	@NotBlank(message = "O órgão emissor é obrigatório")
@@ -116,7 +116,7 @@ public class Paciente {
 
 	@Email(message = "O e-mail deve ser válido")
 	@NotBlank(message = "O e-mail é obrigatório")
-	@Column(nullable = false)
+	@Column(nullable = false,unique=true)
 	private String email;
 
 	private String observacoes;

@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.oitavarosado.clinica_api.api.dto.user.InsertUserDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +24,8 @@ import lombok.Setter;
 @Entity
 @Table(name="tb_users")
 public class User implements UserDetails{
+	
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,6 +34,12 @@ public class User implements UserDetails{
 	private String senha;
 	
 	public User() {
+	}
+	
+	public User(InsertUserDTO dados) {
+		this.nome = dados.nome();
+		this.email = dados.email();
+		this.senha = dados.senha();
 	}
 
 	public Long getId() {
@@ -66,7 +76,6 @@ public class User implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 
