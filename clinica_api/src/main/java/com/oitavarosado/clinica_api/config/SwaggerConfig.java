@@ -22,7 +22,7 @@ public class SwaggerConfig {
 	@Bean
 	OpenAPI customOpenAPI() {
 		return new OpenAPI()
-				.info(new Info().title("Clinia API").version("2.0"))
+				.info(new Info().title("Clinica API").version("2.0"))
 				.addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
 				.components(new Components()
 						.addSecuritySchemes("bearerAuth", new SecurityScheme()
