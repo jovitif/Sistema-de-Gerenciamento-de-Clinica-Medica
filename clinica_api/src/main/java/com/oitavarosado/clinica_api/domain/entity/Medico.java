@@ -19,6 +19,8 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "tb_medicos")
 public class Medico {
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

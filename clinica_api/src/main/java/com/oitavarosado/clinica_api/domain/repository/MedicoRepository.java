@@ -13,5 +13,5 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 	Medico findByUuid(UUID uuid);
 
 	Medico findByNome(String nome);
-
+	Medico findByCpf(String cpf);
 }

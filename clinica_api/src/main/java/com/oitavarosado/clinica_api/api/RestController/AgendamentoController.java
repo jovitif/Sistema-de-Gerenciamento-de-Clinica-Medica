@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,17 @@ public class AgendamentoController {
 	}
 
 	@PatchMapping
+	public ResponseEntity<DadosListagemAgendamento> alterarPatch(@Valid @RequestBody InsertAgendamentoDTO dto) {
+		Agendamento agendamento = service.updateAgendamentoPatch(new Agendamento(dto));
+		DadosListagemAgendamento atualizado = new DadosListagemAgendamento(agendamento);
+		if (atualizado != null) {
+			return new ResponseEntity<>(atualizado, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@PutMapping
 	public ResponseEntity<DadosListagemAgendamento> alterar(@Valid @RequestBody InsertAgendamentoDTO dto) {
 		Agendamento agendamento = service.updateAgendamentoPatch(new Agendamento(dto));
 		DadosListagemAgendamento atualizado = new DadosListagemAgendamento(agendamento);

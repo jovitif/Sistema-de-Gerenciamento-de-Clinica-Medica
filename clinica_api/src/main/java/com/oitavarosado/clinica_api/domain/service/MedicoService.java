@@ -35,6 +35,11 @@ public class MedicoService {
 		return medico;
 	}
 	
+	public Medico getByCpf(String cpf) {
+		Medico medico = medicoRepository.findByCpf(cpf);
+		return medico;
+	}
+	
 	
 	public Medico createmedico(Medico medico) {
 		medico.setUuid(UUID.randomUUID());

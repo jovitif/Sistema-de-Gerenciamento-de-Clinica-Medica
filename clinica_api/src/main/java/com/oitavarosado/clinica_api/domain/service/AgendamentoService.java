@@ -82,22 +82,41 @@ public class AgendamentoService {
 	}
 
 
-	public Agendamento updateAgendamento(Agendamento Agendamento) {
-		Agendamento AgendamentoData = AgendamentoRepository.findByUuid(Agendamento.getUuid()).orElse(null);
-		if (AgendamentoData == null)
-			return null;
-		Agendamento.setId(AgendamentoData.getId());
-		return AgendamentoRepository.save(Agendamento);
+	public Agendamento updateAgendamento(Agendamento agendamento) {
+	    Agendamento agendamentoData = AgendamentoRepository.findByUuid(agendamento.getUuid())
+	            .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado"));
+
+	    agendamento.setId(agendamentoData.getId()); 
+	    return AgendamentoRepository.save(agendamento);
 	}
 
-	public Agendamento updateAgendamentoPatch(Agendamento Agendamento) {
-		Agendamento AgendamentoData = AgendamentoRepository.findByUuid(Agendamento.getUuid()).orElse(null);
-		if (AgendamentoData == null)
-			return null;
-		Agendamento.setId(AgendamentoData.getId());
-		Agendamento.setUuid(AgendamentoData.getUuid());
-		return AgendamentoRepository.save(Agendamento);
+
+	public Agendamento updateAgendamentoPatch(Agendamento agendamento) {
+	    Agendamento agendamentoData = AgendamentoRepository.findByUuid(agendamento.getUuid())
+	            .orElseThrow(() -> new ResourceNotFoundException("Agendamento não encontrado"));
+
+	    agendamento.setId(agendamentoData.getId());
+	    agendamento.setUuid(agendamentoData.getUuid());
+
+	    if (agendamento.getMotivoConsulta() != null) {
+	        agendamentoData.setMotivoConsulta(agendamento.getMotivoConsulta());
+	    }
+	    if (agendamento.getDataConsulta() != null) {
+	        agendamentoData.setDataConsulta(agendamento.getDataConsulta());
+	    }
+	    if (agendamento.getHoraConsulta() != null) {
+	        agendamentoData.setHoraConsulta(agendamento.getHoraConsulta());
+	    }
+	    if (agendamento.getLocalConsulta() != null) {
+	        agendamentoData.setLocalConsulta(agendamento.getLocalConsulta());
+	    }
+	    if (agendamento.getObservacoes() != null) {
+	        agendamentoData.setObservacoes(agendamento.getObservacoes());
+	    }
+
+	    return AgendamentoRepository.save(agendamentoData);
 	}
+
 
 	public String deleteAgendamento(UUID uuid) {
 		Agendamento AgendamentoDelete = AgendamentoRepository.findByUuid(uuid).orElse(null);

@@ -35,6 +35,11 @@ public class PacienteService {
 		return paciente;
 	}
 	
+	public Paciente getByCpf(String cpf) {
+		Paciente paciente = pacienteRepository.findByCpf(cpf);
+		return paciente;
+	}
+	
 	
 	public Paciente createPaciente(Paciente paciente) {
 		paciente.setUuid(UUID.randomUUID());

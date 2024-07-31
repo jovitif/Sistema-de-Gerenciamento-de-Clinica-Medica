@@ -30,24 +30,20 @@ public class SecurityConfiguration {
 			"/swagger-resources"
 	};
 	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http
-	        .csrf().disable()
-	        .authorizeRequests()
-	            .requestMatchers(SWAGGER_WHITELIST).permitAll()
-	            .requestMatchers(HttpMethod.POST, "/login").permitAll()
-	            .requestMatchers(HttpMethod.POST, "/cadastro").permitAll()
-	            .anyRequest().authenticated()
-	        .and()
-	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	    return http.build();
-	}
+	   @Bean
+	    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	        return http.csrf().disable()
+	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	                .and().authorizeHttpRequests()
+		            .requestMatchers(SWAGGER_WHITELIST).permitAll()
+	                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+	                .requestMatchers(HttpMethod.POST, "/cadastro").permitAll()
+	                .anyRequest().authenticated()
+	                .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+	                .build();
+	    }
+	
 
-    
-   
-	
-	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)throws Exception {
 		return configuration.getAuthenticationManager();

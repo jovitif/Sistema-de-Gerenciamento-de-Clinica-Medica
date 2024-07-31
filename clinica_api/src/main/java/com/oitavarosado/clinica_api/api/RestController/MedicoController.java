@@ -55,8 +55,19 @@ public class MedicoController {
 	}
 	
 	@PatchMapping
-	public ResponseEntity<DadosListagemMedico> alterar(@Valid @RequestBody InsertMedicoDTO dto) {
+	public ResponseEntity<DadosListagemMedico> alterarpatch(@Valid @RequestBody InsertMedicoDTO dto) {
 	    Medico medico = service.updatemedicoPatch(new Medico(dto));
+	    DadosListagemMedico atualizado = new DadosListagemMedico(medico);
+	    if(atualizado!=null) {
+	    	return new ResponseEntity<>(atualizado, HttpStatus.OK);
+	    }else {
+	    	return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+	
+	@PutMapping
+	public ResponseEntity<DadosListagemMedico> alterar(@Valid @RequestBody InsertMedicoDTO dto) {
+	    Medico medico = service.updatemedico(new Medico(dto));
 	    DadosListagemMedico atualizado = new DadosListagemMedico(medico);
 	    if(atualizado!=null) {
 	    	return new ResponseEntity<>(atualizado, HttpStatus.OK);
